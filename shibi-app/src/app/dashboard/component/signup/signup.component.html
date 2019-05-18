@@ -1,0 +1,159 @@
+<div class="modal-body bg-white" style="background-color: #525252;" >
+<div  class="col-lg-8 push-lg-2 col-md-10 push-md-1 col-sm-12 olumide">
+  <div class="login_logo login_border_radius1">
+    <h3 class="text-center">
+      <img src="../../../../assets/img/logow.png" alt="josh logo" class="admire_logo"><span class="text-white"> SHIBI  &nbsp;<br/>
+                              Sign Up    </span>
+    </h3>
+  </div>
+
+  <div class="bg-white login_content login_border_radius">
+    <form [formGroup]="signUpForm" novalidate>
+      <div class="form-group row">
+        <div class="col-sm-12">
+
+          <label for="firstName" class="col-form-label">FirstName *</label>
+          <div class="input-group">
+                          <span class="input-group-addon">
+                            <i class="fa fa-user text-primary"></i>
+                         </span>
+            <input type="text" placeholder="First Name" class="form-control  form-control-md" formControlName="firstName" required/>
+          </div>
+
+          <!--Beginning of UserName Validation-->
+          <div *ngIf="signUpForm.controls['firstName'].invalid && (signUpForm.controls['firstName'].dirty || signUpForm.controls['firstName'].touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="signUpForm.controls['firstName'].errors?.required">
+              your first name is required.
+            </div>
+            <div *ngIf="signUpForm.controls['firstName'].errors?.minlength">
+              your first name must be at least 3 characters long.
+            </div>
+          </div>
+        </div>
+        <!--End of First Name Validation-->
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-12">
+
+          <label for="lastName" class="col-form-label">LastName *</label>
+          <div class="input-group">
+                          <span class="input-group-addon">
+                            <i class="fa fa-user text-primary"></i>
+                         </span>
+            <input type="text" placeholder="Last Name" class="form-control  form-control-md" formControlName="lastName" required/>
+          </div>
+
+          <!--Beginning of UserName Validation-->
+          <div *ngIf="signUpForm.controls['lastName'].invalid && (signUpForm.controls['lastName'].dirty || signUpForm.controls['lastName'].touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="signUpForm.controls['lastName'].errors?.required">
+              your Last Name name is required.
+            </div>
+            <div *ngIf="signUpForm.controls['lastName'].errors?.minlength">
+              your first name must be at least 3 characters long.
+            </div>
+          </div>
+        </div>
+        <!--End of Last Name Validation-->
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-12">
+
+          <label for="email" class="col-form-label">Email *</label>
+          <div class="input-group">
+                          <span class="input-group-addon">
+                            <i class="fa fa-envelope text-primary"></i>
+                         </span>
+            <input type="text" placeholder="Email" class="form-control  form-control-md" formControlName="email" required/>
+          </div>
+
+          <!--Beginning of UserName Validation-->
+          <div *ngIf="signUpForm.controls['email'].invalid && (signUpForm.controls['email'].dirty || signUpForm.controls['email'].touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="signUpForm.controls['email'].errors?.required">
+              your Email Name is required.
+            </div>
+            <div *ngIf="signUpForm.controls['email'].errors?.email">
+              "{{this.signUpForm.value.email}}" is not a valid email
+            </div>
+          </div>
+        </div>
+        <!--End of Email Name Validation-->
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-12">
+
+          <label for="username" class="col-form-label">Username *</label>
+          <div class="input-group">
+                          <span class="input-group-addon">
+                            <i class="fa fa-user text-primary"></i>
+                         </span>
+            <input type="text" placeholder="Username" class="form-control  form-control-md" formControlName="username" required/>
+          </div>
+
+          <!--Beginning of UserName Validation-->
+          <div *ngIf="signUpForm.controls['username'].invalid && (signUpForm.controls['username'].dirty || signUpForm.controls['username'].touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="signUpForm.controls['username'].errors?.required">
+              your UserName is required.
+            </div>
+            <div *ngIf="signUpForm.controls['username'].errors?.minlength">
+              your username must be at least 5 characters long.
+            </div>
+          </div>
+        </div>
+        <!--End of Email Name Validation-->
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-12">
+
+          <label for="phoneNumber" class="col-form-label">Phone Number *</label>
+          <div class="input-group">
+                          <span class="input-group-addon">
+                            <i class="fa fa-phone text-primary"></i>
+                         </span>
+            <input type="text" placeholder="Phone Number" class="form-control  form-control-md" formControlName="phoneNumber" required/>
+          </div>
+
+          <!--Beginning of UserName Validation-->
+          <div *ngIf="signUpForm.controls['phoneNumber'].invalid && (signUpForm.controls['phoneNumber'].dirty || signUpForm.controls['phoneNumber'].touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="signUpForm.controls['phoneNumber'].errors?.required">
+              your Phone Number is required.
+            </div>
+            <div *ngIf="signUpForm.controls['phoneNumber'].errors?.minlength">
+              your phone number must be at least 11 characters long.
+            </div>
+          </div>
+        </div>
+        <!--End of Email Name Validation-->
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <button class="btn btn-info btn-block" [disabled]="!signUpForm.valid || loading" (click)="signUp()">
+            Sign Up
+            <i *ngIf="loading" class="fa fa-spin fa-spinner"></i>
+          </button>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label class="col-form-label text-white">Already have an account?</label>
+        <a class="text-primary login_hover" (click)="goBack()"><b>Sign In</b></a>
+      </div>
+    </form>
+  </div>
+</div>
+
+</div>

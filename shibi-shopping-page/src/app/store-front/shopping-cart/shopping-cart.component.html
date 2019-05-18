@@ -1,0 +1,112 @@
+<div class="right-side-cart-area">
+
+  <!-- Cart Button -->
+  <div class="cart-button" (click)="toggleNav()">
+    <a href="javascript:void(0)" id="rightSideCart"><img src="../../../assets/img/core-img/bag.svg" alt=""> <span>{{cartquantity.length}}</span></a>
+  </div>
+
+  <div class="cart-content d-flex" tabindex="1" style="overflow: auto; outline: none;">
+
+    <!-- Cart List Area -->
+    <div class="cart-list" tabindex="2" style="overflow: auto; outline: none;">
+      <!-- Single Cart Item -->
+      <div class="single-cart-item mt-3" *ngFor="let list of cartquantity">
+        <a href="javascript:void(0)" class="product-image">
+          <img src="{{list?.productImage}}" style="height: auto; width: auto" class="cart-thumb mb-5" alt="">
+          <!-- Cart Item Desc -->
+          <div class="cart-item-desc">
+            <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
+            <span class="badge text-white">Product Name: {{list?.productName}}</span>
+            <div class="row no-gutters">
+              <div class="col-2">
+                <button class="btn btn-secondary btn-block">-</button>
+              </div>
+              <div class="col text-white text-center">{{list?.productQuantity}} qty in cart</div>
+              <div class="col-2">
+                <button class="btn btn-secondary btn-block">+</button>
+              </div>
+            </div>
+            <p class="badge-info text-center"><s>N</s>{{list?.salePrice * list?.productQuantity}}</p>
+          </div>
+        </a>
+      </div>
+      <div class="row no-gutters">
+        <p><strong>Total:</strong> <s>N</s>{{totalPrice}}</p>
+      </div>
+      <button class="btn essence-btn btn-block mt-50"
+              (click)="addNewCart()"
+      >
+        Add New Plate
+      </button>
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="cart-amount-summary">
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div *ngFor="let cart of allCart; let j =index" class="card text-center" style="max-width: 10rem;" >
+
+            <span class="pull-right clickable close-icon" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text"></p>
+              <div>
+                <button class="btn btn-primary"
+                        (click)="viewPlate(j)">
+                  View Plate
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+<div class="row" *ngIf="viewedPlate.length > 0 && viewedPlate != null">
+  <div class="row" *ngFor="let content of viewedPlate">
+    <ul>
+      <li>Food: {{content.productName}}</li>
+    </ul>
+  </div>
+</div>
+      <h2>Summary</h2>
+      <ul  class="summary-table bg-white">
+        <li><span>subtotal:</span> <span>$274.00</span></li>
+        <li><span>delivery:</span> <span>Free</span></li>
+        <li><span>discount:</span> <span>-15%</span></li>
+        <li><span>total:</span> <span>$232.00</span></li>
+      </ul>
+      <div class="checkout-btn mt-100">
+        <a href="checkout.html" class="btn essence-btn">check out</a>
+      </div>
+    </div>
+    <div id="ascrail2001" class="nicescroll-rails nicescroll-rails-vr" style="width: 8px; z-index: 10; cursor: default; position: absolute; top: 0px; left: 182px; height: 500px; display: block; opacity: 0;"><div class="nicescroll-cursors" style="position: relative; top: 0px; float: right; width: 6px; height: 322px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px;"></div></div>
+    <div id="ascrail2001-hr" class="nicescroll-rails nicescroll-rails-hr" style="height: 8px; z-index: 10; top: 492px; left: 0px; position: absolute; cursor: default; display: none; width: 182px; opacity: 0;"><div class="nicescroll-cursors" style="position: absolute; top: 0px; height: 6px; width: 190px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px; left: 0px;"></div></div></div>
+  <div id="ascrail2000" class="nicescroll-rails nicescroll-rails-vr" style="width: 8px; z-index: 1; cursor: default; position: absolute; top: 0px; left: 662px; height: 500px; display: block; opacity: 0;">
+    <div class="nicescroll-cursors" style="position: relative; top: 0px; float: right; width: 6px; height: 473px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px;"></div>
+  </div>
+  <div id="ascrail2000-hr" class="nicescroll-rails nicescroll-rails-hr" style="height: 8px; z-index: 1; top: 492px; left: 0px; position: absolute; cursor: default; display: none; width: 662px; opacity: 0;">
+    <div class="nicescroll-cursors" style="position: absolute; top: 0px; height: 6px; width: 670px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px; left: 0px;">
+
+    </div>
+  </div>
+</div>
+<div class="modal fadeInDown" id="modal-slideinright">
+
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h3 class="modal-title">Plate Content</h3>
+      </div>
+      <div class="modal-body">
+        <p>lorem ipsum ila dolorjbdvmnkjvads  bmx hsbm </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger button-rounded" data-dismiss="modal" (click)="closeModal()">Close me!</button>
+      </div>
+    </div>
+  </div>
+</div>

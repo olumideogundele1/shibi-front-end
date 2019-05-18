@@ -1,0 +1,459 @@
+<div class="preloader" style=" position: fixed;
+                              width: 100%;
+                               height: 100%;
+                               top: 0;
+                               left: 0;
+                               z-index: 100000;
+                               backface-visibility: hidden;
+                               background: #ffffff" xmlns="http://www.w3.org/1999/html">
+  <div class="preloader_img" style="width: 200px;
+       height: 200px;
+       position: absolute;
+       left: 48%;
+       top: 48%;
+       background-position: center;
+       z-index: 999999">
+    <img src="../../../../assets/img/loader.gif" style=" width: 40px; " alt="loading...">
+  </div>
+</div>
+<div class="bg-dark" id="wrap">
+  <div id="top">
+    <app-header-nav></app-header-nav>
+  </div>
+  <div class="wrapper" style="min-height:274px;">
+    <app-side-navbar></app-side-navbar>
+
+    <div id = "content">
+      <header class="head">
+        <div class="main-bar row">
+          <div class="row">
+            <div class="col-lg-6 col-md-4 col-sm-4">
+              <h4 class="nav_top_align">
+                <i class="fa fa-user"></i>
+                Users
+              </h4>
+            </div>
+            <div class="col-lg-6 col-md-8 col-sm-8">
+              <ol class="breadcrumb float-right nav_breadcrumb_top_align">
+                <li class="breadcrumb-item">
+                  <a href="#">
+                    <i class="fa fa-home" data-pack="default" data-tags=""></i>
+                    Dashboard
+                  </a>
+                </li>
+                <li class="breadcrumb-item active">Users</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="outer">
+        <div class="inner bg-light lter bg-container">
+          <div class="card">
+            <div class="row">
+              <div class="col-lg-12 data_tables">
+                <div class="card">
+                  <div class="card-header bg-white">
+                    <div>
+                      <button *ngIf="this.role === 'ROLE_SUPERADMIN'" class="btn btn-primary button-rounded m-t-15 hvr-float-shadow float-right"
+                              (click)="createNewUser()" data-target="#modal-slideinright">
+                        Create User
+                      </button>
+                    </div>
+
+                  </div>
+                  <div class="card-block m-t-35">
+                    <div id="example1_wrapper" class="dataTables_wrapper dt_bootstrap">
+                      <div class="table-responsive">
+                        <table id="example" class="display table table-stripped table-bordered dataTable" role="grid" aria-describedby="example1_info">
+                            <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">First Name</th>
+                              <th scope="col">Last Name</th>
+                              <th scope="col"> Username</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">Role</th>
+                              <th scope="col">Phone</th>
+                              <th scope="col">Status</th>
+                              <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody *ngIf="list">
+                              <tr *ngFor=" let user of list?.allUsers?.content | paginate: {itemsPerPage: 10, currentPage: p, totalItems: list?.allUsers?.totalElements};
+                              let i = index">
+                              <th scope="row"><span *ngIf="(p-1)!== 0 && i!==9">{{p-1}}</span><span *ngIf="i!==9">{{i+1}}</span><span
+                                *ngIf="i===9">{{p}}0</span></th>
+                                <td>{{user?.firstName}}</td>
+                                <td>{{user?.lastName}}</td>
+                                <td>{{user?.username}}</td>
+                                <td>{{user?.email}}</td>
+                                <td>{{user['authorities'][0]['authority'] | removeRole}}</td>
+                                <td>{{user?.phone}}</td>
+
+                                <td>
+                                  <switch
+                                          [status] = "user?.enabled"
+                                          [onText] = "'on'"
+                                          [onText] = "'off'"
+                                          [onColor] = "'green'"
+                                          [offColor] = "'red'"
+                                          [size] = "'mini'"
+                                          [disabled] = "false"
+                                          (statusChange)="onChangeStatus(user, $event)">
+                                  </switch>
+                                </td>
+                                <td>
+                                  <button (click)="onEdit(user)"
+                                          placement="bottom" ngbTooltip="Edit {{user?.username}}"
+                                          class="btn btn-success button-rounded">
+                                          <i class="fa fa-pencil"></i>
+                                  </button>
+                                </td>
+
+                              </tr>
+                              <tr *ngIf="booleans?.loader">
+                                <td class="text-center" colspan="12"><i class="fa fa-spin fa-spinner"></i>Loading User(s) </td>
+                              </tr>
+                              <tr *ngIf="!booleans?.loader && (list?.allUsers.length === 0 || list?.allUsers?.content?.length===0)">
+                                <td class="text-center" colspan="12">No Content Found</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+                      </div>
+                      <!--end: Datatable -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
+<div class="modal fadeInDown" id="modal-slideinright" *ngIf="isReady" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="openModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h3 class="modal-title" id="modalLabelslide1">User</h3>
+      </div>
+      <div class="modal-body">
+        <!--<form [formGroup]="createForm">-->
+          <!--<div class="row">-->
+            <!--<div class="form-group row m-t-35">-->
+              <!--<div class="col-lg-3 col-xl-2 text-lg-right">-->
+                <!--<label><span class="star">*</span>First Name</label>-->
+              <!--</div>-->
+              <!--<div class="col-lg-8 col-xl-4">-->
+                <!--<div class="input-group">-->
+                                            <!--<span class="input-group-addon">-->
+                                            <!--<i class="fa fa-user"></i>-->
+                                        <!--</span>-->
+                  <!--<input type="text" formControlName="firstName" autocomplete="off" placeholder="First Name" [(ngModel)]="globalUser['firstName']">-->
+                <!--</div>-->
+                <!--<div *ngIf="(createForm.get('firstName').invalid && createForm.get('firstName').touched)" class="alert alert-danger text-center">-->
+                  <!--First Name is Required-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="col-lg-3 col-xl-2  text-lg-right">-->
+                <!--<label><span class="star">*</span>Last Name</label>-->
+              <!--</div>-->
+              <!--<div class="col-lg-8 col-xl-4  two_column_signup_margintop">-->
+                <!--<div class="input-group">-->
+
+                                        <!--<span class="input-group-addon">-->
+                                            <!--<i class="fa fa-user"></i>-->
+                                        <!--</span>-->
+                  <!--<input type="text" formControlName="lastName" autocomplete="off" placeholder="Last Name" [(ngModel)]="globalUser['lastName']">-->
+
+                <!--</div>-->
+                <!--<div *ngIf="(createForm.get('lastName').invalid && createForm.get('lastName').touched) " class="alert alert-danger text-center">-->
+                  <!--Last Name is Required-->
+                <!--</div>-->
+
+              <!--</div>-->
+
+
+            <!--</div>-->
+            <!--<div class="form-group row">-->
+              <!--<div class="col-lg-3 col-xl-2 text-lg-right">-->
+                <!--<label class="col-form-label"><span class="star">*</span> Username</label>-->
+              <!--</div>-->
+              <!--<div class="col-lg-8 col-xl-4">-->
+                <!--<div class="input-group">-->
+                                            <!--<span class="input-group-addon">-->
+                                            <!--<i class="fa fa-user"></i>-->
+                                        <!--</span>-->
+                  <!--<input type="text" formControlName="username" autocomplete="off" placeholder="Username" [(ngModel)]="globalUser['username']">-->
+                <!--</div>-->
+                <!--<div *ngIf="(createForm.get('username').invalid && createForm.get('username').touched) " class="alert alert-danger text-center">-->
+                  <!--Username is Required-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="col-lg-3 col-xl-2 two_column_label_margintop text-lg-right">-->
+                <!--<label><span class="star">*</span> E-mail</label>-->
+              <!--</div>-->
+              <!--<div class="col-lg-8 col-xl-4 two_column_signup_margintop">-->
+                <!--<div class="input-group">-->
+                                            <!--<span class="input-group-addon">-->
+                                            <!--<i class="fa fa-envelope"></i>-->
+                                        <!--</span>-->
+                  <!--<input type="text" formControlName="email" placeholder="E-mail" [(ngModel)]="globalUser['email']">-->
+                <!--</div>-->
+                <!--<div *ngIf="(createForm.get('email').invalid && createForm.get('email').touched) " class="alert alert-danger text-center">-->
+                  <!--Email is Required-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group row">-->
+              <!--<div class="col-lg-4 col-xl-3 text-lg-right">-->
+                <!--<label><span class="star">*</span>Phone Number</label>-->
+              <!--</div>-->
+              <!--<div class="col-lg-8 col-xl-3">-->
+                <!--<div class="input-group">-->
+                                            <!--<span class="input-group-addon">-->
+                                            <!--<i class="fa fa-lock"></i>-->
+                                        <!--</span>-->
+                  <!--<input type="text" formControlName="phoneNumber" placeholder="Phone Number" [(ngModel)]="globalUser['phone']">-->
+                <!--</div>-->
+                <!--<div *ngIf="(createForm.get('phoneNumber').invalid && createForm.get('phoneNumber').touched) " class="alert alert-danger text-center">-->
+                  <!--Phone is Required-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="col-lg-5 col-xl-2 two_column_label_margintop text-lg-right" *ngIf="showUpdate">-->
+                <!--<label><span class="star">*</span> Authorities</label>-->
+
+                <!--<div class="col-lg-7 col-xl-4 two_column_signup_margintop" >-->
+                  <!--<div class="input-group">-->
+
+                    <!--<input type="radio" formControlName="userRoles" value="1" [(ngModel)]="globalUser['userRoles']"><label>SUPERADMIN</label>&nbsp;&nbsp;-->
+                    <!--<input type="radio" formControlName="userRoles" value="2" [(ngModel)]="globalUser['useRoles']"><label>ADMIN</label>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</form>-->
+        <form class="form-horizontal" [formGroup]="createForm">
+          <fieldset>
+            <div class="form-group row m-t-35">
+              <div class="col-lg-3 col-xl-2 text-lg-right">
+                <label class=" col-form-label">First Name</label>
+              </div>
+              <div class="col-lg-8 col-xl-4">
+                <div class="input-group">
+                                            <span class="input-group-addon">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                  <input type="text" class="form-control" formControlName="firstName" autocomplete="off" placeholder="First Name" [(ngModel)]="globalUser['firstName']" required>
+                </div>
+                <div *ngIf="(createForm.get('firstName').invalid && createForm.get('firstName').touched)" class="alert alert-danger text-center">
+                    First Name is Required
+                </div>
+              </div>
+              <div class="col-lg-3 col-xl-2  text-lg-right">
+                <label class="col-form-label two_column_label_margintop">Last Name</label>
+              </div>
+              <div class="col-lg-8 col-xl-4  two_column_signup_margintop">
+                <div class="input-group">
+                  <input type="text"  class="form-control" formControlName="lastName" autocomplete="off" [(ngModel)]="globalUser['lastName']" placeholder="Last Name" required>
+                  <span class="input-group-addon">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                </div>
+                <div *ngIf="(createForm.get('lastName').invalid && createForm.get('lastName').touched)" class="alert alert-danger text-center">
+                  Last Name is Required
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-3 col-xl-2 text-lg-right">
+                <label class="col-form-label">Username</label>
+              </div>
+              <div class="col-lg-8 col-xl-4">
+                <div class="input-group">
+                                            <span class="input-group-addon">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                  <input type="text"  class="form-control" formControlName="username" autocomplete="off" placeholder="Username" [(ngModel)]="globalUser['username']" required>
+                </div>
+                <div *ngIf="(createForm.get('username').invalid && createForm.get('username').touched) " class="alert alert-danger text-center">
+                Username is Required
+                </div>
+              </div>
+              <div class="col-lg-3 col-xl-2 two_column_label_margintop text-lg-right">
+                <label class="control-label">E-mail</label>
+              </div>
+              <div class="col-lg-8 col-xl-4 two_column_signup_margintop">
+                <div class="input-group">
+                                            <span class="input-group-addon">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                  <input type="text" formControlName="email" autocomplete="off" class="form-control" placeholder="E-mail" [(ngModel)]="globalUser['email']" required>
+                </div>
+                <div *ngIf="(createForm.get('email').invalid && createForm.get('email').touched) " class="alert alert-danger text-center">
+                Email is Required
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-3 col-xl-2 text-lg-right">
+                <label  class="col-form-label">Phone Number</label>
+              </div>
+              <div class="col-lg-8 col-xl-4">
+                <div class="input-group">
+                                            <span class="input-group-addon">
+                                            <i class="fa fa-lock"></i>
+                                        </span>
+                  <input type="text"  class="form-control" formControlName="phoneNumber" autocomplete="off" placeholder="Phone Number" [(ngModel)]="globalUser['phone']" required>
+                </div>
+                <div *ngIf="(createForm.get('phoneNumber').invalid && createForm.get('phoneNumber').touched) " class="alert alert-danger text-center">
+                Phone is Required
+                </div>
+              </div>
+              <div class="col-lg-3 col-xl-2 two_column_label_margintop text-lg-right">
+                <label for="confirm4" class="col-form-label">Confirm Password</label>
+              </div>
+              <div class="col-lg-8 col-xl-4 two_column_signup_margintop">
+                <div class="input-group">
+                                            <span class="input-group-addon">
+                                            <i class="fa fa-lock"></i>
+                                        </span>
+                  <input type="password" id="confirm4" class="form-control" placeholder="Confirm Password" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="showUpdate">
+              <div class="col-lg-3 col-xl-2 text-lg-right" >
+                <label  class="col-form-label">Authorities</label>
+              </div>
+              <div class="col-lg-8 col-xl-4">
+                <div class="input-group">
+                                          <!--  <span class="input-group-addon">
+                                          &lt;!&ndash;  <i class="fa fa-users"></i>&ndash;&gt;
+                                        </span>-->
+                  <input type="radio" formControlName="userRoles" value="1" [(ngModel)]="globalUser['userRoles']"><label>SUPERADMIN</label>&nbsp;&nbsp;
+                  <input type="radio" formControlName="userRoles" value="2" [(ngModel)]="globalUser['useRoles']"><label>ADMIN</label>
+
+                </div>
+              </div>
+             <!-- <div class="col-lg-3 col-xl-2 two_column_label_margintop text-lg-right">
+                <label for="date4" class="col-form-label">DOB</label>
+              </div>
+              <div class="col-lg-8 col-xl-4 two_column_signup_margintop">
+                <div class="input-group">
+                  <span class="input-group-addon">D</span>
+                  <select id="date4" class="form-control form_lay_select_padding">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>17</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                    <option>27</option>
+                    <option>28</option>
+                    <option>29</option>
+                    <option>30</option>
+                    <option>31</option>
+                  </select>
+                  <span class="input-group-addon">M</span>
+                  <select class="form-control  form_lay_select_padding">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                  </select>
+                  <span class="input-group-addon">Y</span>
+                  <select class="form-control form_lay_select_padding">
+                    <option>2000</option>
+                    <option>2001</option>
+                    <option>2002</option>
+                    <option>2003</option>
+                    <option>2004</option>
+                    <option>2005</option>
+                    <option>2006</option>
+                    <option>2007</option>
+                    <option>2008</option>
+                    <option>2009</option>
+                    <option>2010</option>
+                    <option>2011</option>
+                    <option>2012</option>
+                    <option>2013</option>
+                    <option>2014</option>
+                    <option>2015</option>
+                    <option>2016</option>
+                    <option>2017</option>
+                    <option>2018</option>
+                    <option>2019</option>
+                    <option>2020</option>
+                  </select>
+                </div>
+              </div>-->
+            </div>
+            <!-- last name-->
+          <!--  <div class="form-group row">
+              <div class="col-lg-9 push-xl-2 push-lg-3">
+                <label class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description"> I Agree Terms to the
+                                            <a href="#">Terms and Conditions</a></span>
+                </label>
+              </div>
+            </div>-->
+            <!--<div class="form-group row">
+              <div class="col-lg-9 push-xl-2 push-lg-3">
+                <button class="btn btn-primary layout_btn_prevent">Sign Up</button>
+                <button class="btn btn-warning layout_btn_prevent">Cancel</button>
+              </div>
+            </div>-->
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger button-rounded" data-dismiss="modal" (click)="closeModal()">Close me!</button>
+        <button type="button" [disabled]="(createForm.invalid || booleans?.loadingStatus) && booleans?.submitLoader"
+                (click)="onSubmit()" class="btn btn-primary button-rounded">
+          <i class="fa fa-spinner fa-spin" *ngIf="booleans.submitLoader"></i>
+          {{ btnText }}
+          <!--<span *ngIf="!showUpdate"> Submit </span>
+          <span *ngIf="showUpdate"> Update </span>-->
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

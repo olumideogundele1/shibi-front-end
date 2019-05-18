@@ -1,0 +1,90 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+shibi-app/dist
+shibi-app/dist-server
+shibi-app/tmp
+shibi-app/out-tsc
+
+# dependencies
+shibi-app/node_modules
+
+# IDEs and editors
+shibi-app/.idea
+shibi-app/.project
+shibi-app/.classpath
+shibi-app/.c9/
+shibi-app/*.launch
+shibi-app/.settings/
+shibi-app/*.sublime-workspace
+
+# IDE - VSCode
+shibi-app/.vscode/*
+shibi-app/!.vscode/settings.json
+shibi-app/!.vscode/tasks.json
+shibi-app/!.vscode/launch.json
+shibi-app/!.vscode/extensions.json
+
+# misc
+shibi-app//.sass-cache
+shibi-app/connect.lock
+shibi-app/coverage
+shibi-app/libpeerconnection.log
+shibi-app/npm-debug.log
+shibi-app/yarn-error.log
+shibi-app/testem.log
+shibi-app/typings
+
+# e2e
+shibi-app/e2e/*.js
+shibi-app/e2e/*.map
+
+# System Files
+shibi-app/.DS_Store
+shibi-app/Thumbs.db
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+shibi-shopping-page/dist
+shibi-shopping-page/dist-server
+shibi-shopping-page/tmp
+shibi-shopping-page/out-tsc
+
+# dependencies
+shibi-shopping-page/node_modules
+
+# IDEs and editors
+shibi-shopping-page/.idea
+shibi-shopping-page/.project
+shibi-shopping-page/.classpath
+shibi-shopping-page/.c9/
+shibi-shopping-page/*.launch
+shibi-shopping-page/.settings/
+shibi-shopping-page/*.sublime-workspace
+
+# IDE - VSCode
+shibi-shopping-page/.vscode/*
+shibi-shopping-page/!.vscode/settings.json
+shibi-shopping-page/!.vscode/tasks.json
+shibi-shopping-page/!.vscode/launch.json
+shibi-shopping-page/!.vscode/extensions.json
+
+# misc
+shibi-shopping-page/.sass-cache
+shibi-shopping-page/connect.lock
+shibi-shopping-page/coverage
+shibi-shopping-page/libpeerconnection.log
+shibi-shopping-page/npm-debug.log
+shibi-shopping-page/yarn-error.log
+shibi-shopping-page/testem.log
+shibi-shopping-page//typings
+
+# e2e
+shibi-shopping-page/e2e/*.js
+shibi-shopping-page//e2e/*.map
+
+# System Files
+shibi-shopping-page/.DS_Store
+shibi-shopping-page/Thumbs.db
+

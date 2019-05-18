@@ -1,0 +1,176 @@
+<div class="preloader" style=" position: fixed;
+                              width: 100%;
+                               height: 100%;
+                               top: 0;
+                               left: 0;
+                               z-index: 100000;
+                               backface-visibility: hidden;
+                               background: #ffffff">
+  <div class="preloader_img" style="width: 200px;
+       height: 200px;
+       position: absolute;
+       left: 48%;
+       top: 48%;
+       background-position: center;
+       z-index: 999999">
+    <img src="../../../../assets/img/loader.gif" style=" width: 40px; " alt="loading...">
+  </div>
+</div>
+<div class="body">
+  <div class="container wow fadeInDown"
+       data-wow-delay="0.5s"
+       data-wow-duration="5s"
+       style="visibility: visible;
+      animation-duration: 5s;
+      animation-delay: 0.5s;
+      animation-name: fadeInDown;">
+    <div class="row">
+      <div class="col-lg-8 push-lg-2 col-md-10 push-md-1 col-sm-10 push-sm-1 login_top_bottom">
+        <div class="row">
+          <div *ngIf="!forgotPasswordScreen" class="col-lg-8 push-lg-2 col-md-10 push-md-1 col-sm-12 olumide">
+            <div class="login_logo login_border_radius1">
+              <h3 class="text-center">
+                <img src="../../../../assets/img/logow.png" alt="josh logo" class="admire_logo"><span class="text-white"> SHIBI  &nbsp;<br/>
+                              Sign In    </span>
+              </h3>
+            </div>
+
+            <div class="bg-white login_content login_border_radius">
+                  <form [formGroup]="signInForm"  class="top15" autocomplete="on">
+                    <div class="form-group text-primary">
+                      <label for="username" class="col-form-label">Username</label>
+                      <div class="input-group">
+                        <span class="input-group-addon input_email">
+                          <i class="fa fa-user text-primary"></i>
+                       </span>
+                        <input type="text" placeholder="Username" class="form-control  form-control-md" formControlName="username" required/>
+                      </div>
+
+                      <!--Beginning of UserName Validation-->
+                      <div *ngIf="signInForm.controls['username'].invalid && (signInForm.controls['username'].dirty || signInForm.controls['username'].touched)"
+                           class="alert alert-danger">
+
+                        <div *ngIf="signInForm.controls['username'].errors?.required">
+                          your username email is required.
+                        </div>
+                      </div>
+                      <div>
+
+                        <div style="font-size: 10px;" class="alert alert-danger animated pulse" *ngIf="loaders.sessionExpiration">
+                          {{loaders.logoutMessage}}
+                        </div>
+                      </div>
+                      <!--End of Username Validation-->
+                    </div>
+                    <div class="form-group text-primary">
+                      <label for="password" class="col-form-label">Password</label>
+                      <div class="input-group">
+                        <span class="input-group-addon addon_password">
+                          <i class="fa fa-lock text-primary"></i>
+                        </span>
+                        <input type="password" placeholder="Password" class="form-control form-control-md" formControlName="password" required>
+                      </div>
+                      <!--Beginning of Password Validation-->
+                      <div *ngIf="signInForm.controls['password'].invalid && (signInForm.controls['password'].dirty || signInForm.controls['password'].touched)"
+                           class="alert alert-danger">
+
+                        <div *ngIf="signInForm.controls['password'].errors?.required">
+                          your password is required.
+                        </div>
+
+                      </div>
+                      <!--End of Password Validation-->
+                    </div>
+                    <br>
+
+                    <button class="btn btn-info btn-block" [disabled]="!signInForm.valid || loading" (click)="signIn()">
+                      Sign In
+                      <i *ngIf="loading" class="fa fa-spin fa-spinner"></i>
+                    </button>
+                  </form>
+                  <!-- </div> -->
+                  <br>
+                  <!--<p class="text-center"><a class="text-primary" (click)="navToSignUp(content)">Don't have an account yet?-->
+                    <!--<strong class="font-weight-bold text-info">Sign Up</strong></a>-->
+                  <!--</p>-->
+                  <!--<p class="text-center"><a class="text-danger" (click)="navToForgotPassword()">Forgot your password?</a> </p>-->
+                  <div class="form-group" >
+                    <div class="row">
+                      <div class="col-6">
+                        <label class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input form-control">
+                          <span class="custom-control-indicator"></span>
+                          <a class="custom-control-description">Keep me logged in</a>
+                        </label>
+                      </div>
+                      <div class="col-6 text-right forgot_pwd">
+                        <a class="custom-control-description forgottxt_clr" (click)="navToForgotPassword()">Forgot Password?</a>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label text-white">Don't you have an account?</label>
+                    <a class="text-primary login_hover" (click)="navToSignUp(content)"><b>Sign Up</b></a>
+                  </div>
+            </div>
+          </div>
+          <div *ngIf="forgotPasswordScreen" class="col-lg-8 push-lg-2 col-md-10 push-md-1 col-sm-12 olumide">
+            <div class="login_logo login_border_radius1">
+              <h3 class="text-center">
+                <button type="button" class="close fa fa-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+                </button>
+                <br>
+                <br>
+                <br>
+                <div>
+                  <img src="../../../../assets/img/logow.png" alt="josh logo" class="admire_logo">
+                  <h1 class="text-white">Reset your Password &nbsp;</h1>
+                  <p class="text-info">Shibi Account</p>
+                </div>
+                <br>
+               </h3>
+            </div>
+            <form [formGroup]="forgotPasswordForm">
+              <div class="form-group text-primary">
+                <label for="email" class="col-form-label">Email</label>
+                <div class="input-group">
+                        <span class="input-group-addon addon_email">
+                          <i class="fa fa-envelope text-primary"></i>
+                        </span>
+                  <input type="text" placeholder="Email" class="form-control form-control-md" formControlName="email" required>
+                </div>
+                <!--Beginning of UserName Validation-->
+                <div *ngIf="forgotPasswordForm.controls['email'].invalid && (forgotPasswordForm.controls['email'].dirty || forgotPasswordForm.controls['email'].touched)"
+                     class="alert alert-danger">
+
+                  <div *ngIf="forgotPasswordForm.controls['email'].errors?.required">
+                    your email is required.
+                  </div>
+
+                </div>
+                <!--End of Password Validation-->
+              </div>
+              <br>
+              <button class="btn btn-outline-info btn-block" [disabled]="!forgotPasswordForm.valid || loading" (click)="forgotPassword()">
+                Send To My Email
+                <i *ngIf="loading" class="fa fa-spin fa-spinner"></i>
+              </button>
+            </form>
+            <br>
+            <p class="text-center">
+              <label class="col-form-label text-white">I remember my password now!</label>
+              <a class="text-primary" (click)="goBack()"><strong class="font-weight-bold text-info">Sign In</strong> </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!--SIGN UP MODAL -->
+  <ng-template #content let-c="close" let-d="dismiss">
+    <app-signup ></app-signup>
+  </ng-template>
+

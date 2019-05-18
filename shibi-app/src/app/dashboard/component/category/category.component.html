@@ -1,0 +1,182 @@
+<div class="preloader" style=" position: fixed;
+                              width: 100%;
+                               height: 100%;
+                               top: 0;
+                               left: 0;
+                               z-index: 100000;
+                               backface-visibility: hidden;
+                               background: #ffffff">
+  <div class="preloader_img" style="width: 200px;
+       height: 200px;
+       position: absolute;
+       left: 48%;
+       top: 48%;
+       background-position: center;
+       z-index: 999999">
+    <img src="../../../../assets/img/loader.gif" style=" width: 40px; " alt="loading...">
+  </div>
+</div>
+<div class="bg-dark" id="wrap">
+  <div id="top">
+    <app-header-nav></app-header-nav>
+  </div>
+  <div class="wrapper" style="min-height:274px;">
+    <app-side-navbar></app-side-navbar>
+    <div id = "content">
+      <header class="head">
+        <div class="main-bar row">
+          <div class="row">
+            <div class="col-lg-6 col-md-4 col-sm-4">
+              <h4 class="nav_top_align">
+                <i class="fa fa-folder-o"></i>
+                Category
+              </h4>
+            </div>
+            <div class="col-lg-6 col-md-8 col-sm-8">
+              <ol class="breadcrumb float-right nav_breadcrumb_top_align">
+                <li class="breadcrumb-item">
+                  <a href="#">
+                    <i class="fa fa-home" data-pack="default" data-tags=""></i>
+                    Dashboard
+                  </a>
+                </li>
+                <li class="breadcrumb-item active">Categories</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="outer">
+        <div class="inner bg-light lter bg-container">
+          <div class="card">
+            <div class="row">
+              <div class="col-lg-12 data_tables">
+                <div class="card">
+                  <div class="card-header bg-white">
+                    <div>
+                      <button  class="btn btn-primary button-rounded m-t-15 hvr-float-shadow float-right"
+                               (click)="createNewCategory()" data-target="#modal-slideinright">
+                        Create Category
+                      </button>
+                    </div>
+
+                  </div>
+                  <div class="card-block m-t-35">
+                    <div id="example1_wrapper" class="dataTables_wrapper dt_bootstrap">
+                      <div class="table-responsive">
+                        <table id="example" class="display table table-stripped table-bordered dataTable" role="grid" aria-describedby="example1_info">
+                          <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Category Name</th>
+                            <!--<th scope="col">Quantity Type</th>-->
+                            <!--<th scope="col">Price</th>-->
+                            <!--<th scope="col">Image</th>-->
+                            <!--<th scope="col">Category</th>-->
+                            <!--<th scope="col">Status</th>-->
+                            <!--<th scope="col">Action</th>-->
+                          </tr>
+                          </thead>
+                          <tbody *ngIf="list">
+                          <tr *ngFor=" let category of list?.allCategories?.content | paginate: {itemsPerPage: 10, currentPage: p, totalItems: list?.allCategories?.totalElements};
+                              let i = index">
+                            <th scope="row"><span *ngIf="(p-1)!== 0 && i!==9">{{p-1}}</span><span *ngIf="i!==9">{{i+1}}</span><span
+                              *ngIf="i===9">{{p}}0</span></th>
+                            <td>{{category?.categoryName}}</td>
+                            <!--<td>{{product?.quantityType}}</td>-->
+                            <!--<td>{{product?.salePrice}}</td>-->
+                            <!--<td>{{product?.productImage}}</td>-->
+                            <!--<td>{{product?.category}}</td>-->
+
+                            <td>
+                              <switch
+                                [status] = "category?.enabled"
+                                [onText] = "'on'"
+                                [onText] = "'off'"
+                                [onColor] = "'green'"
+                                [offColor] = "'red'"
+                                [size] = "'mini'"
+                                [disabled] = "false"
+                                (statusChange)="onChangeStatus(category, $event)">
+                              </switch>
+                            </td>
+                            <td>
+                              <button (click)="onEdit(category)"
+                                      placement="bottom" ngbTooltip="Edit {{category?.categoryName}}"
+                                      class="btn btn-success button-rounded">
+                                <i class="fa fa-pencil"></i>
+                              </button>
+                            </td>
+
+                          </tr>
+                          <tr *ngIf="booleans?.loader">
+                            <td class="text-center" colspan="12"><i class="fa fa-spin fa-spinner"></i>Loading Category(s) </td>
+                          </tr>
+                          <tr *ngIf="!booleans?.loader && (list?.allCategories.length === 0 || list?.allCategories?.content?.length===0)">
+                            <td class="text-center" colspan="12">No Content Found</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+                      </div>
+                      <!--end: Datatable -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal fadeInDown" id="modal-slideinright" *ngIf="isReady" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="openModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h3 class="modal-title" id="modalLabelslide1">Category</h3>
+      </div>
+      <div class="modal-body">
+
+        <form class="form-horizontal" [formGroup]="createCategoryForm">
+          <fieldset>
+            <div class="form-group row m-t-35">
+              <div class="col-lg-3 col-xl-2 text-lg-right">
+                <label class=" col-form-label">Category Name</label>
+              </div>
+              <div class="col-lg-8 col-xl-4">
+                <div class="input-group">
+                                            <span class="input-group-addon">
+                                            <i class="fa fa-product-hunt"></i>
+                                        </span>
+                  <input type="text" class="form-control" formControlName="categoryName" autocomplete="off" placeholder="Category Name" [(ngModel)]="globalCategory['categoryName']" required>
+                </div>
+                <div *ngIf="(createCategoryForm.get('categoryName').invalid && createCategoryForm.get('categoryName').touched)" class="alert alert-danger text-center">
+                  Category Name is Required
+                </div>
+              </div>
+
+
+            </div>
+
+
+
+
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger button-rounded" data-dismiss="modal" (click)="closeModal()">Close me!</button>
+        <button type="button" [disabled]="(createCategoryForm.invalid || booleans?.loadingStatus) && booleans?.submitLoader"
+                (click)="onSubmit()" class="btn btn-primary button-rounded">
+          <i class="fa fa-spinner fa-spin" *ngIf="booleans.submitLoader"></i>
+          {{ btnText }}
+          <!--<span *ngIf="!showUpdate"> Submit </span>
+          <span *ngIf="showUpdate"> Update </span>-->
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

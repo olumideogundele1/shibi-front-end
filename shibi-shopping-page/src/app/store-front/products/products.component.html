@@ -1,0 +1,141 @@
+<body>
+<app-header-nav></app-header-nav>
+<div class="breadcumb_area bg-img" style="background-image: url(../../../assets/img/bg-img/breadcumb.jpg);">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-12">
+        <div class="page-title text-center">
+          <h2>Products</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="shop_grid_area section-padding-80">
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-4 col-lg-3">
+      <div class="shop_sidebar_area">
+
+        <!-- ##### Single Widget ##### -->
+        <div class="widget catagory mb-50">
+          <!-- Widget Title -->
+          <h6 class="widget-title mb-30">Categories</h6>
+
+          <!--  Catagories  -->
+          <div class="catagories-menu">
+            <ul id="menu-content2" class="menu-content collapse show">
+              <!-- Single Item -->
+              <li class="sub-menu collapse show" id="">
+               <a
+                 routerLink="/products"
+                 (click)="getProducts(p-1)">
+                 All Categories
+               </a>
+              </li>
+              <li *ngFor="let category of categories"
+                  class="sub-menu collapse show"
+                  id="clothing" >
+                <a
+                routerLink="/products"
+                [queryParams]="{activeCategories: category.categoryId}"
+                [class.active]="activeCategories === category.categoryId"
+                (click)="getProductsByCategory(category.categoryId)"
+                >
+                  {{category.categoryName}}
+                </a>
+
+              </li>
+              <!-- Single Item -->
+
+
+            </ul>
+          </div>
+        </div>
+
+
+
+        <!-- ##### Single Widget ##### -->
+
+
+
+      </div>
+    </div>
+    <div class = "col-12 col-md-8 col-lg-9">
+      <div class="shop_grid_product_area">
+        <div class="row">
+          <div class="col-12">
+            <div class="product-topbar d-flex align-items-center justify-content-between">
+              <!-- Total Products -->
+              <div class="total-products">
+                <p><span>{{Products.length}}</span> products found</p>
+              </div>
+              <!-- Sorting -->
+              <div class="product-sorting d-flex">
+                <p>Sort by:</p>
+                <form action="#" method="get">
+                  <select name="select" id="sortByselect" style="display: none;">
+                    <option value="value">Highest Rated</option>
+                    <option value="value">Newest</option>
+                    <option value="value">Price: $$ - $</option>
+                    <option value="value">Price: $ - $$</option>
+                  </select><div class="nice-select" tabindex="0"><span class="current">Highest Rated</span><ul class="list"><li data-value="value" class="option selected">Highest Rated</li><li data-value="value" class="option">Newest</li><li data-value="value" class="option">Price: $$ - $</li><li data-value="value" class="option">Price: $ - $$</li></ul></div>
+                  <input type="submit" class="d-none" value="">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngFor="let i of displayProduct" class="row">
+          <div *ngFor="let product of Products | slice:(i * 3): (i + 1)*3"  class="col-12 col-sm-6 col-lg-4">
+            <div class="single-product-wrapper">
+              <!-- Product Image -->
+              <div class="product-img">
+                <img src="{{product?.productImage}}" height="42" width="42" alt="">
+                <!-- Hover Thumb -->
+                <img class="hover-img" src="{{product?.productImage}}" height="42" width="42" alt="">
+
+                <!-- Product Badge -->
+                <div class="product-badge offer-badge">
+                  <span>-30%</span>
+                </div>
+                <!-- Favourite -->
+                <div class="product-favourite">
+                  <a href="#" class="favme fa fa-heart"></a>
+                </div>
+              </div>
+
+              <!-- Product Description -->
+              <div class="product-description">
+                <span>{{product?.stores.storeName}}</span>
+                <a href="single-product-details.html">
+                  <h6>{{product?.productName}}</h6>
+                </a>
+                <p class="product-price"><span class="old-price"></span><s>N</s>{{product?.salePrice}}</p>
+                <!--Product Quantity-->
+                <div  class="product-badge offer-badge">
+                  <span>{{getQuantity(product)}}</span>
+                </div>
+                <!-- Hover Content -->
+                <div class="hover-content">
+                  <!-- Add to Cart -->
+                  <div class="add-to-cart-btn">
+                    <button
+                      (click)="addToCart(product)"
+                       class="btn essence-btn">
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+</body>

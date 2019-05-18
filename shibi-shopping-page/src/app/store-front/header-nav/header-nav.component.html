@@ -1,0 +1,97 @@
+<header class="header_area">
+  <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between light left">
+    <nav class="classy-navbar" id="essenceNav">
+      <a class="nav-brand" href="#">
+        <img src="../../../assets/img/core-img/logo.png"  height="100" width="100" >
+      </a>
+      <div class="classy-navbar-toggler">
+      <span class="navbarToggler">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      </div>
+      <div class="classy-menu">
+        <!-- close btn -->
+        <div class="classycloseIcon">
+          <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+        </div>
+        <!-- Nav Start -->
+        <div class="classynav">
+          <ul>
+            <li class="megamenu-item"><a href="#">Shop</a>
+              <div class="megamenu">
+                <ul class="single-mega cn-col-4">
+                  <li class="title">Women's Collection</li>
+                  <li><a href="shop.html">Dresses</a></li>
+                  <li><a href="shop.html">Blouses &amp; Shirts</a></li>
+                  <li><a href="shop.html">T-shirts</a></li>
+                  <li><a href="shop.html">Rompers</a></li>
+                  <li><a href="shop.html">Bras &amp; Panties</a></li>
+                </ul>
+                <ul class="single-mega cn-col-4">
+                  <li class="title">Men's Collection</li>
+                  <li><a href="shop.html">T-Shirts</a></li>
+                  <li><a href="shop.html">Polo</a></li>
+                  <li><a href="shop.html">Shirts</a></li>
+                  <li><a href="shop.html">Jackets</a></li>
+                  <li><a href="shop.html">Trench</a></li>
+                </ul>
+                <ul class="single-mega cn-col-4">
+                  <li class="title">Kid's Collection</li>
+                  <li><a href="shop.html">Dresses</a></li>
+                  <li><a href="shop.html">Shirts</a></li>
+                  <li><a href="shop.html">T-shirts</a></li>
+                  <li><a href="shop.html">Jackets</a></li>
+                  <li><a href="shop.html">Trench</a></li>
+                </ul>
+                <div class="single-mega cn-col-4">
+
+                </div>
+              </div>
+              <span class="dd-trigger"></span><span class="dd-arrow"></span></li>
+            <li class="cn-dropdown-item has-down pr12"><a href="#">Pages</a>
+              <ul class="dropdown">
+                <li><a href="javascript:void(0)">Home</a></li>
+                <li><a href="javascript:void(0)">Shop</a></li>
+                <li><a href="javascript:void(0)">Product Details</a></li>
+                <li><a href="javascript:void(0)">Checkout</a></li>
+                <li><a href="javascript:void(0)">Blog</a></li>
+                <li><a href="javascript:void(0)">Single Blog</a></li>
+                <li><a href="javascript:void(0)">Regular Page</a></li>
+                <li><a href="javascript:void(0)">Contact</a></li>
+              </ul>
+              <span class="dd-trigger"></span><span class="dd-arrow"></span>
+            </li>
+            <li><a href="javascript:void(0)">Blog</a></li>
+            <li><a href="javascript:void(0)">Contact</a></li>
+          </ul>
+        </div>
+        <!-- Nav End -->
+      </div>
+    </nav>
+    <div class="header-meta d-flex clearfix justify-content-end">
+      <!-- Search Area -->
+      <div class="search-area">
+        <form action="#" method="post">
+          <input type="search" name="search" id="headerSearch" placeholder="Type for search">
+          <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </form>
+      </div>
+      <!-- Favourite Area -->
+      <div class="favourite-area">
+        <a href="javascript:void(0)"><img src="../../../assets/img/core-img/heart.svg" alt=""></a>
+      </div>
+      <!-- User Login Info -->
+      <div class="user-login-info">
+        <a href="javascript:void(0)"><img src="../../../assets/img/core-img/user.svg" alt=""></a>
+      </div>
+      <!-- Cart Area -->
+      <div class="cart-area" (click)="toggleNav()">
+        <a href="javascript:void(0)" id="essenceCartBtn"><img src="../../../assets/img/core-img/bag.svg" alt=""> <span>{{cartquantity.length}}</span></a>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="cart bg-overlay olumideClass" ></div>
+<app-shopping-cart></app-shopping-cart>
